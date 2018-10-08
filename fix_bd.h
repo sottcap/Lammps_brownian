@@ -39,6 +39,7 @@ class FixBD : public Fix {
   int setmask();
   virtual void init();
   virtual void initial_integrate(int);
+  virtual void final_integrate();
   virtual void reset_dt();
 
  protected:

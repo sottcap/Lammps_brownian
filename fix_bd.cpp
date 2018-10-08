@@ -64,6 +64,7 @@ int FixBD::setmask()
 {
   int mask = 0;
   mask |= INITIAL_INTEGRATE;
+  mask |= FINAL_INTEGRATE;
   return mask;
 }
 
@@ -101,9 +102,9 @@ void FixBD::initial_integrate(int vflag)
       if (mask[i] & groupbit) {
         dtfm = dtf / rmass[i];
         randf = sqrt(rmass[i]) * gfactor;
-        x[i][0] += dtv * dtfm * (f[i][0]+randf*random->gaussian());
-        x[i][1] += dtv * dtfm * (f[i][1]+randf*random->gaussian());
-        x[i][2] += dtv * dtfm * (f[i][2]+randf*random->gaussian());
+        x[i][0] += 0.5 * dtv * dtfm * (f[i][0]+randf*random->gaussian());
+        x[i][1] += 0.5 * dtv * dtfm * (f[i][1]+randf*random->gaussian());
+        x[i][2] += 0.5 * dtv * dtfm * (f[i][2]+randf*random->gaussian());
       }
 
   } else {
@@ -111,9 +112,47 @@ void FixBD::initial_integrate(int vflag)
       if (mask[i] & groupbit) {
         dtfm = dtf / mass[type[i]];
         randf = sqrt(mass[type[i]]) * gfactor;
-        x[i][0] += dtv * dtfm * (f[i][0]+randf*random->gaussian());
-        x[i][1] += dtv * dtfm * (f[i][1]+randf*random->gaussian());
-        x[i][2] += dtv * dtfm * (f[i][2]+randf*random->gaussian());
+        x[i][0] += 0.5 * dtv * dtfm * (f[i][0]+randf*random->gaussian());
+        x[i][1] += 0.5 * dtv * dtfm * (f[i][1]+randf*random->gaussian());
+        x[i][2] += 0.5 * dtv * dtfm * (f[i][2]+randf*random->gaussian());
+      }
+  }
+}
+
+void FixBD::final_integrate()
+{
+  double dtfm;
+  double randf;
+
+  // update v and x of atoms in group
+
+  double **x = atom->x;
+  double **f = atom->f;
+  double *rmass = atom->rmass;
+  double *mass = atom->mass;
+  int *type = atom->type;
+  int *mask = atom->mask;
+  int nlocal = atom->nlocal;
+  if (igroup == atom->firstgroup) nlocal = atom->nfirst;
+  
+  if (rmass) {
+    for (int i = 0; i < nlocal; i++)
+      if (mask[i] & groupbit) {
+        dtfm = dtf / rmass[i];
+        randf = sqrt(rmass[i]) * gfactor;
+        x[i][0] += 0.5 * dtv * dtfm * (f[i][0]+randf*random->gaussian());
+        x[i][1] += 0.5 * dtv * dtfm * (f[i][1]+randf*random->gaussian());
+        x[i][2] += 0.5 * dtv * dtfm * (f[i][2]+randf*random->gaussian());
+      }
+
+  } else {
+    for (int i = 0; i < nlocal; i++)
+      if (mask[i] & groupbit) {
+        dtfm = dtf / mass[type[i]];
+        randf = sqrt(mass[type[i]]) * gfactor;
+        x[i][0] += 0.5 * dtv * dtfm * (f[i][0]+randf*random->gaussian());
+        x[i][1] += 0.5 * dtv * dtfm * (f[i][1]+randf*random->gaussian());
+        x[i][2] += 0.5 * dtv * dtfm * (f[i][2]+randf*random->gaussian());
       }
   }
 }

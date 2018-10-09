@@ -103,12 +103,9 @@ void FixBD::initial_integrate(int vflag)
       if (mask[i] & groupbit) {
         dtfm = dtf / rmass[i];
         randf = sqrt(rmass[i]) * gfactor;
-        v[i][0] = dtfm * (f[i][0]+randf*random->gaussian())
-        v[i][1] = dtfm * (f[i][1]+randf*random->gaussian())
-        v[i][2] = dtfm * (f[i][2]+randf*random->gaussian())
-        x[i][0] += (0.5 * dtv * v[i][0] < 2.0) ? 0.5 * dtv * v[i][0] < 2.0 : 2.0;
-        x[i][1] += (0.5 * dtv * v[i][1] < 2.0) ? 0.5 * dtv * v[i][1] < 2.0 : 2.0;
-        x[i][2] += (0.5 * dtv * v[i][2] < 2.0) ? 0.5 * dtv * v[i][2] < 2.0 : 2.0;
+        x[i][0] += 0.5 * dtv * v[i][0];
+        x[i][1] += 0.5 * dtv * v[i][1];
+        x[i][2] += 0.5 * dtv * v[i][2];
       }
 
   } else {
@@ -116,12 +113,9 @@ void FixBD::initial_integrate(int vflag)
       if (mask[i] & groupbit) {
         dtfm = dtf / mass[type[i]];
         randf = sqrt(mass[type[i]]) * gfactor;
-        v[i][0] = dtfm * (f[i][0]+randf*random->gaussian())
-        v[i][1] = dtfm * (f[i][1]+randf*random->gaussian())
-        v[i][2] = dtfm * (f[i][2]+randf*random->gaussian())
-        x[i][0] += (0.5 * dtv * v[i][0] < 2.0) ? 0.5 * dtv * v[i][0] < 2.0 : 2.0;
-        x[i][1] += (0.5 * dtv * v[i][1] < 2.0) ? 0.5 * dtv * v[i][1] < 2.0 : 2.0;
-        x[i][2] += (0.5 * dtv * v[i][2] < 2.0) ? 0.5 * dtv * v[i][2] < 2.0 : 2.0;
+        x[i][0] += 0.5 * dtv * v[i][0];
+        x[i][1] += 0.5 * dtv * v[i][1];
+        x[i][2] += 0.5 * dtv * v[i][2];
       }
   }
 }
@@ -148,12 +142,12 @@ void FixBD::final_integrate()
       if (mask[i] & groupbit) {
         dtfm = dtf / rmass[i];
         randf = sqrt(rmass[i]) * gfactor;
-        v[i][0] = dtfm * (f[i][0]+randf*random->gaussian())
-        v[i][1] = dtfm * (f[i][1]+randf*random->gaussian())
-        v[i][2] = dtfm * (f[i][2]+randf*random->gaussian())
-        x[i][0] += (0.5 * dtv * v[i][0] < 2.0) ? 0.5 * dtv * v[i][0] < 2.0 : 2.0;
-        x[i][1] += (0.5 * dtv * v[i][1] < 2.0) ? 0.5 * dtv * v[i][1] < 2.0 : 2.0;
-        x[i][2] += (0.5 * dtv * v[i][2] < 2.0) ? 0.5 * dtv * v[i][2] < 2.0 : 2.0;
+        v[i][0] = dtfm * (f[i][0]+randf*random->gaussian());
+        v[i][1] = dtfm * (f[i][1]+randf*random->gaussian());
+        v[i][2] = dtfm * (f[i][2]+randf*random->gaussian());
+        x[i][0] += 0.5 * dtv * v[i][0];
+        x[i][1] += 0.5 * dtv * v[i][1];
+        x[i][2] += 0.5 * dtv * v[i][2];
       }
 
   } else {
@@ -161,12 +155,12 @@ void FixBD::final_integrate()
       if (mask[i] & groupbit) {
         dtfm = dtf / mass[type[i]];
         randf = sqrt(mass[type[i]]) * gfactor;
-        v[i][0] = dtfm * (f[i][0]+randf*random->gaussian())
-        v[i][1] = dtfm * (f[i][1]+randf*random->gaussian())
-        v[i][2] = dtfm * (f[i][2]+randf*random->gaussian())
-        x[i][0] += (0.5 * dtv * v[i][0] < 2.0) ? 0.5 * dtv * v[i][0] < 2.0 : 2.0;
-        x[i][1] += (0.5 * dtv * v[i][1] < 2.0) ? 0.5 * dtv * v[i][1] < 2.0 : 2.0;
-        x[i][2] += (0.5 * dtv * v[i][2] < 2.0) ? 0.5 * dtv * v[i][2] < 2.0 : 2.0;
+        v[i][0] = dtfm * (f[i][0]+randf*random->gaussian());
+        v[i][1] = dtfm * (f[i][1]+randf*random->gaussian());
+        v[i][2] = dtfm * (f[i][2]+randf*random->gaussian());
+        x[i][0] += 0.5 * dtv * v[i][0];
+        x[i][1] += 0.5 * dtv * v[i][1];
+        x[i][2] += 0.5 * dtv * v[i][2];
       }
   }
 }

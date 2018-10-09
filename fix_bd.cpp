@@ -89,6 +89,7 @@ void FixBD::initial_integrate(int vflag)
   // update v and x of atoms in group
 
   double **x = atom->x;
+  double **v = atom->v;
   double **f = atom->f;
   double *rmass = atom->rmass;
   double *mass = atom->mass;
@@ -133,6 +134,7 @@ void FixBD::final_integrate()
   // update v and x of atoms in group
 
   double **x = atom->x;
+  double **v = atom->v;
   double **f = atom->f;
   double *rmass = atom->rmass;
   double *mass = atom->mass;

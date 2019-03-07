@@ -23,6 +23,7 @@
 #include "comm.h"
 #include "random_mars.h"
 #include <omp.h>
+#include <string.h>
 
 using namespace LAMMPS_NS;
 using namespace FixConst;
